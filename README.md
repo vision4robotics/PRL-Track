@@ -10,13 +10,11 @@ Visual object tracking has significantly promoted autonomous applications for un
 ![PRL-Track_zt](./assets/PRL-Track_zt.png)
 
 ## Video Demo 
-
 TODO
 
 ## Setup
 
 ### Requirements
-
 This code has been tested on Ubuntu 18.04, Python 3.8.3, Pytorch 1.13.1, and CUDA 11.6. 
 
 Please install related libraries before running this code:
@@ -30,7 +28,6 @@ pip install -r requirements.txt
 ### Training
 
 #### Prepare training datasets
-
 Download the datasets：
 * [COCO](http://cocodataset.org)
 * [GOT-10K](http://got-10k.aitestunion.com/downloads)
@@ -45,7 +42,6 @@ python tools/train.py
 ```
 
 ### Testing
-
 Download pretrained model: [PRL-Track](xxx) and put it into `tools/snapshot` directory.
 
 Download testing datasets and put them into `test_dataset` directory. If you want to test the tracker on a new dataset, please refer to [pysot-toolkit](https://github.com/StrangerZhang/pysot-toolkit) to set test_dataset.
@@ -57,7 +53,6 @@ python tools/test.py
 The testing result will be saved in the `results/dataset_name/tracker_name` directory.
 
 ### Evaluation
-
 We provide the tracking [results](xxx) of UAVTrack112, UAVTrack112_L, and UAV123. If you want to evaluate the tracker, please put those results into results directory.
 
 ```bash
@@ -65,7 +60,6 @@ python tools/eval.py
 ```
 
 ## Qualitative Evaluation
-
 ![qualitative evaluation](./assets/qualitative_evaluation.png)
 
 ## Acknowledgments
