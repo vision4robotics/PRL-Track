@@ -53,7 +53,9 @@ python tools/test.py
 The testing result will be saved in the `results/dataset_name/tracker_name` directory.
 
 ### Evaluation
-We provide the tracking [results](xxx) of UAVTrack112, UAVTrack112_L, and UAV123. If you want to evaluate the tracker, please put those results into results directory.
+We provide the tracking results of UAVTrack112, UAVTrack112_L, and UAV123. 
+
+If you want to evaluate the tracker, please put those results into results directory.
 
 ```bash
 python tools/eval.py

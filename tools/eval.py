@@ -16,7 +16,7 @@ from toolkit.datasets import *
 parser = argparse.ArgumentParser(description="Single Object Tracking Evaluation")
 parser.add_argument(
     "--datasetpath",
-    default="/mnt/sdc/V4R/LX/2024/HiFT/test_dataset/",
+    default="path to test_dataset",
     type=str,
     help="dataset root directory",
 )
@@ -27,9 +27,7 @@ parser.add_argument(
     type=str,
     help="tracker result root",
 )
-parser.add_argument(
-    "--tracker_path", default="./results", type=str
-)
+parser.add_argument("--tracker_path", default="./results", type=str)
 parser.add_argument("--vis", default="", dest="vis", action="store_true")
 parser.add_argument(
     "--show_video_level", default=True, dest="show_video_level", action="store_true"

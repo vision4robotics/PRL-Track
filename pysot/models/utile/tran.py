@@ -55,7 +55,7 @@ class Attention(nn.Module):
 
         self.qkv_mem = None
 
-    def forward(self, x, t_h, t_w, s_h, s_w):
+    def forward(self, x):
         B, N, C = x.shape
         qkv = (
             self.qkv(x)
@@ -134,13 +134,9 @@ class Block(nn.Module):
         )
         self.drop_path2 = DropPath(drop_path) if drop_path > 0.0 else nn.Identity()
 
-    def forward(self, x, t_h, t_w, s_h, s_w):
-        x = x + self.drop_path1(
-            self.attn(self.norm1(x), t_h, t_w, s_h, s_w)
-        )  # 第一个残差：Linear Projection 输出结果 + 原始结果
-        x = x + self.drop_path2(
-            self.mlp(self.norm2(x))
-        )  # 第二个残差：上一步结果 + 上一步结果经过 mlp 处理
+    def forward(self, x):
+        x = x + self.drop_path1(self.attn(self.norm1(x)))
+        x = x + self.drop_path2(self.mlp(self.norm2(x)))
         return x
 
 
@@ -235,34 +231,33 @@ class VisionTransformer(timm.models.vision_transformer.VisionTransformer):
         )
         self.pos_embed_s.data.copy_(torch.from_numpy(pos_embed_s).float().unsqueeze(0))
 
-    def forward(self, x_t, x_ot, x_s):
+    def forward(self, x3, x4, x5):
         """
-        :param x_t: (batch, 3, 128, 128)
-        :param x_s: (batch, 3, 288, 288)
+        :param x3: (batch, 3, 128, 128)
+        :param x5: (batch, 3, 288, 288)
         b c h w: batch 192 11 11
         :return:
         """
-        x_t = self.patch_embed(x_t)  # BCHW-->BNC
-        x_ot = self.patch_embed(x_ot)
-        x_s = self.patch_embed(x_s)
-        B, C = x_t.size(0), x_t.size(-1)
+        x3 = self.patch_embed(x3)  # BCHW-->BNC
+        x4 = self.patch_embed(x4)
+        x5 = self.patch_embed(x5)
+        B, C = x3.size(0), x3.size(-1)
         H_s = W_s = self.grid_size_s
         H_t = W_t = self.grid_size_t
 
-        x_s = x_s + self.pos_embed_s
-        x_t = x_t + self.pos_embed_t
-        x_ot = x_ot + self.pos_embed_t
-        x = torch.cat([x_t, x_ot, x_s], dim=2)
+        x5 = x5 + self.pos_embed_s
+        x3 = x3 + self.pos_embed_t
+        x4 = x4 + self.pos_embed_t
+        x = torch.cat([x3, x4, x5], dim=2)
         x = self.pos_drop(x)
 
         for blk in self.blocks:
-            x = blk(x, H_t, W_t, H_s, W_s)  # block 对应文章里面的 slimming
+            x = blk(x)
 
-        x_t, x_ot, x_s = torch.split(x, x.shape[2] // 3, dim=2)
+        x3, x4, x5 = torch.split(x, x.shape[2] // 3, dim=2)
 
-        x_t_2d = x_t.transpose(1, 2).reshape(B, C, H_t, W_t)
-        x_ot_2d = x_ot.transpose(1, 2).reshape(B, C, H_t, W_t)
-        x_s_2d = x_s.transpose(1, 2).reshape(B, C, H_s, W_s)
+        x3_2d = x3.transpose(1, 2).reshape(B, C, H_t, W_t)
+        x4_2d = x4.transpose(1, 2).reshape(B, C, H_t, W_t)
+        x5_2d = x5.transpose(1, 2).reshape(B, C, H_s, W_s)
 
-        # return x_t_2d, x_ot_2d, x_s_2d
-        return x_s_2d
+        return x5_2d

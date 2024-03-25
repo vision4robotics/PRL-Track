@@ -20,15 +20,20 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 def main():
     parser = argparse.ArgumentParser(description="PRL-Track tracking")
-    parser.add_argument("--dataset", default="UAVTrack112_L", type=str, help="datasets"),
     parser.add_argument(
-        "--dataset-root", default="/mnt/sdc/V4R/LX/2024/HiFT/test_dataset", type=str, help="dataset root"
+        "--dataset", default="UAVTrack112_L", type=str, help="datasets"
+    ),
+    parser.add_argument(
+        "--dataset-root", default="path to test_dataset", type=str, help="dataset root"
     )
     parser.add_argument(
         "--config", default="./experiments/config.yaml", type=str, help="config file"
     )
     parser.add_argument(
-        "--snapshot", default="./snapshot/best.pth", type=str, help="snapshot of models to eval"
+        "--snapshot",
+        default="./snapshot/best.pth",
+        type=str,
+        help="snapshot of models to eval",
     )
     parser.add_argument("--video", default="", type=str, help="eval one special video")
     parser.add_argument(
