@@ -1,18 +1,18 @@
-# PRL-Track: Progressive Representation Learning for Real-Time UAV Tracking
+# 🏃‍♀️ PRL-Track: Progressive Representation Learning for Real-Time UAV Tracking
 Changhong Fu∗, Xiang Lei, Haobo Zuo, Liangliang Yao, Guangze Zheng, and Jia Pan
-* Corresponding author.
+\* Corresponding author.
 
 This is the official code for the paper "Progressive Representation Learning for Real-Time UAV Tracking".
 
 ![PRL-Track_zt](./assets/PRL-Track_zt.png)
 
 ## Abstract
-Visual object tracking has significantly promoted autonomous applications for unmanned aerial vehicles (UAVs). However, learning robust object representations for UAV tracking is especially challenging in complex dynamic environments, when confronted with aspect ratio change and occlusion. These challenges severely alter the original information of the object. To handle the above issues, this work proposes a novel progressive representation learning framework for UAV tracking, i.e., PRL-Track. Specifically, PRL-Track is divided into coarse representation learning and fine representation learning. For coarse representation learning, an innovative appearance-aware regulator and a convenient semantic-aware regulator are designed to mitigate appearance interference and capture semantic information. Furthermore, for fine representation learning, a new hierarchical modeling generator is developed to intertwine coarse object representations. Exhaustive experiments demonstrate that the proposed PRL-Track delivers exceptional performance on three authoritative UAV tracking benchmarks. Real-world tests indicate that the proposed PRL-Track realizes superior tracking performance with 42.6 frames per second on the typical UAV platform equipped with an edge smart camera. The code, model, and demo videos are available at https://github.com/vision4robotics/PRL-Track.
+> Visual object tracking has significantly promoted autonomous applications for unmanned aerial vehicles (UAVs). However, learning robust object representations for UAV tracking is especially challenging in complex dynamic environments, when confronted with aspect ratio change and occlusion. These challenges severely alter the original information of the object. To handle the above issues, this work proposes a novel progressive representation learning framework for UAV tracking, i.e., PRL-Track. Specifically, PRL-Track is divided into coarse representation learning and fine representation learning. For coarse representation learning, an innovative appearance-aware regulator and a convenient semantic-aware regulator are designed to mitigate appearance interference and capture semantic information. Furthermore, for fine representation learning, a new hierarchical modeling generator is developed to intertwine coarse object representations. Exhaustive experiments demonstrate that the proposed PRL-Track delivers exceptional performance on three authoritative UAV tracking benchmarks. Real-world tests indicate that the proposed PRL-Track realizes superior tracking performance with 42.6 frames per second on the typical UAV platform equipped with an edge smart camera. The code, model, and demo videos are available at here.
 
-## Video Demo 
-TODO
+## 🎞️ Video Demo 
+[![PRL-Track: Progressive Representation Learning for Real-Time UAV Tracking](https://res.cloudinary.com/marcomontalbano/image/upload/v1712205733/video_to_markdown/images/youtube--39lBuLESIFE-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://www.youtube.com/watch?v=39lBuLESIFE "PRL-Track: Progressive Representation Learning for Real-Time UAV Tracking")
 
-## Setup
+## 🛠️ Setup
 
 ### Requirements
 This code has been tested on Ubuntu 18.04, Python 3.8.3, Pytorch 1.13.1, and CUDA 11.6. 
@@ -23,7 +23,7 @@ Please install related libraries before running this code:
 pip install -r requirements.txt
 ```
 
-## Getting started
+## 🚀 Getting started
 
 ### Training
 
@@ -42,7 +42,7 @@ python tools/train.py
 ```
 
 ### Testing
-Download pretrained model: [PRL-Track](xxx) and put it into `tools/snapshot` directory.
+Download pretrained model: [PRL-Track](https://drive.google.com/file/d/1v0oHyv6XTyOfnq09_HpBN3W_qEnLD32d/view?usp=sharing) and put it into `tools/snapshot` directory.
 
 Download testing datasets and put them into `test_dataset` directory. If you want to test the tracker on a new dataset, please refer to [pysot-toolkit](https://github.com/StrangerZhang/pysot-toolkit) to set test_dataset.
 
@@ -64,7 +64,7 @@ python tools/eval.py
 ## Qualitative Evaluation
 ![qualitative evaluation](./assets/qualitative_evaluation.png)
 
-## Acknowledgments
+## 🥰 Acknowledgments
 The code is implemented based on [pysot](https://github.com/STVIR/pysot) and [HiFT](https://github.com/vision4robotics/HiFT). We would like to express our sincere thanks to the contributors.
 
 ## Contact
