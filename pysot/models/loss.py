@@ -4,9 +4,9 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
-from torch import nn
 
 import torch
+from torch import nn
 import torch.nn.functional as F
 
 
@@ -31,7 +31,6 @@ def select_cross_entropy_loss(pred, label):
 
 class IOULoss(nn.Module):
     def forward(self, pred, target, weight=None):
-
         pred_left = pred[:, :, 0]
         pred_top = pred[:, :, 1]
         pred_right = pred[:, :, 2]

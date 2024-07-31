@@ -47,6 +47,7 @@ class AlexNet(nn.Module):
             map(lambda x: 3 if x == 3 else int(x * width_mult), AlexNet.configs)
         )
         super(AlexNet, self).__init__()
+
         self.layer1 = nn.Sequential(
             nn.Conv2d(configs[0], configs[1], kernel_size=11, stride=2),
             nn.BatchNorm2d(configs[1]),
@@ -69,7 +70,6 @@ class AlexNet(nn.Module):
             nn.BatchNorm2d(configs[4]),
             nn.ReLU(inplace=True),
         )
-
         self.layer5 = nn.Sequential(
             nn.Conv2d(configs[4], configs[5], kernel_size=3),
             nn.BatchNorm2d(configs[5]),

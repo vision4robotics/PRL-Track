@@ -1,6 +1,5 @@
 import os
 import sys
-import re
 import argparse
 
 sys.path.append("./")
@@ -16,7 +15,7 @@ from toolkit.datasets import *
 parser = argparse.ArgumentParser(description="Single Object Tracking Evaluation")
 parser.add_argument(
     "--datasetpath",
-    default="path to test_dataset",
+    default="./test_dataset/",
     type=str,
     help="dataset root directory",
 )

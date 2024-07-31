@@ -8,12 +8,16 @@ import logging
 
 import torch
 
-log_dir = 'logs'
+log_dir = "logs"
 os.makedirs(log_dir, exist_ok=True)
 script_name = os.path.splitext(os.path.basename(__file__))[0]
-log_filename = os.path.join(log_dir, script_name + '.txt')
-logging.basicConfig(filename=log_filename, level=logging.INFO, 
-                    format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s', datefmt='%a, %d %b %Y %H:%M:%S')
+log_filename = os.path.join(log_dir, script_name + ".txt")
+logging.basicConfig(
+    filename=log_filename,
+    level=logging.INFO,
+    format="%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s",
+    datefmt="%a, %d %b %Y %H:%M:%S",
+)
 logger = logging.getLogger(__name__)
 
 

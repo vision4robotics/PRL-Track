@@ -136,4 +136,5 @@ class Augmentation:
         # flip augmentation
         if self.flip and self.flip > np.random.random():
             image, bbox = self._flip_aug(image, bbox)
+            
         return image, bbox

@@ -11,10 +11,10 @@ import math
 import sys
 
 
-if hasattr(sys, 'frozen'):  # support for py2exe
+if hasattr(sys, "frozen"):  # support for py2exe
     _srcfile = "logging%s__init__%s" % (os.sep, __file__[-4:])
-elif __file__[-4:].lower() in ['.pyc', '.pyo']:
-    _srcfile = __file__[:-4] + '.py'
+elif __file__[-4:].lower() in [".pyc", ".pyo"]:
+    _srcfile = __file__[:-4] + ".py"
 else:
     _srcfile = __file__
 _srcfile = os.path.normcase(_srcfile)
@@ -35,31 +35,33 @@ class Dummy:
         pass
 
     def __getattr__(self, arg):
-        def dummy(*args, **kwargs): pass
+        def dummy(*args, **kwargs):
+            pass
+
         return dummy
 
 
 def get_format(logger, level):
-    if 'RANK' in os.environ:
-        rank = int(os.environ['RANK'])
+    if "RANK" in os.environ:
+        rank = int(os.environ["RANK"])
 
         if level == logging.INFO:
             logger.addFilter(Filter(rank == 0))
     else:
         rank = 0
-    format_str = '[%(asctime)s-rk{}-%(filename)s#%(lineno)3d] %(message)s'.format(rank)
+    format_str = "[%(asctime)s-rk{}-%(filename)s#%(lineno)3d] %(message)s".format(rank)
     formatter = logging.Formatter(format_str)
     return formatter
 
 
 def get_format_custom(logger, level):
-    if 'RANK' in os.environ:
-        rank = int(os.environ['RANK'])
+    if "RANK" in os.environ:
+        rank = int(os.environ["RANK"])
         if level == logging.INFO:
             logger.addFilter(Filter(rank == 0))
     else:
         rank = 0
-    format_str = '[%(asctime)s-rk{}-%(message)s'.format(rank)
+    format_str = "[%(asctime)s-rk{}-%(message)s".format(rank)
     formatter = logging.Formatter(format_str)
     return formatter
 
@@ -85,24 +87,31 @@ def add_file_handler(name, log_file, level=logging.INFO):
     logger.addHandler(fh)
 
 
-init_log('global')
+init_log("global")
 
 
 def print_speed(i, i_time, n):
     """print_speed(index, index_time, total_iteration)"""
-    logger = logging.getLogger('global')
+    logger = logging.getLogger("global")
     average_time = i_time
     remaining_time = (n - i) * average_time
     remaining_day = math.floor(remaining_time / 86400)
-    remaining_hour = math.floor(remaining_time / 3600 -
-                                remaining_day * 24)
-    remaining_min = math.floor(remaining_time / 60 -
-                               remaining_day * 1440 -
-                               remaining_hour * 60)
-    logger.info('Progress: %d / %d [%d%%], Speed: %.3f s/iter, ETA %d:%02d:%02d (D:H:M)\n' %
-                (i, n, i / n * 100,
-                 average_time,
-                 remaining_day, remaining_hour, remaining_min))
+    remaining_hour = math.floor(remaining_time / 3600 - remaining_day * 24)
+    remaining_min = math.floor(
+        remaining_time / 60 - remaining_day * 1440 - remaining_hour * 60
+    )
+    logger.info(
+        "Progress: %d / %d [%d%%], Speed: %.3f s/iter, ETA %d:%02d:%02d (D:H:M)\n"
+        % (
+            i,
+            n,
+            i / n * 100,
+            average_time,
+            remaining_day,
+            remaining_hour,
+            remaining_min,
+        )
+    )
 
 
 def find_caller():
@@ -132,7 +141,7 @@ def find_caller():
 class LogOnce:
     def __init__(self):
         self.logged = set()
-        self.logger = init_log('log_once', format_func=get_format_custom)
+        self.logger = init_log("log_once", format_func=get_format_custom)
 
     def log(self, strings):
         fn, lineno, caller = find_caller()
@@ -141,7 +150,8 @@ class LogOnce:
             return
         self.logged.add(key)
         message = "{filename:s}<{caller}>#{lineno:3d}] {strings}".format(
-                filename=fn, lineno=lineno, strings=strings, caller=caller)
+            filename=fn, lineno=lineno, strings=strings, caller=caller
+        )
         self.logger.info(message)
 
 
@@ -153,21 +163,21 @@ def log_once(strings):
 
 
 def main():
-    for i, lvl in enumerate([logging.DEBUG, logging.INFO,
-                             logging.WARNING, logging.ERROR,
-                             logging.CRITICAL]):
+    for i, lvl in enumerate(
+        [logging.DEBUG, logging.INFO, logging.WARNING, logging.ERROR, logging.CRITICAL]
+    ):
         log_name = str(lvl)
         init_log(log_name, lvl)
         logger = logging.getLogger(log_name)
-        print('****cur lvl:{}'.format(lvl))
-        logger.debug('debug')
-        logger.info('info')
-        logger.warning('warning')
-        logger.error('error')
-        logger.critical('critiacal')
+        print("****cur lvl:{}".format(lvl))
+        logger.debug("debug")
+        logger.info("info")
+        logger.warning("warning")
+        logger.error("error")
+        logger.critical("critiacal")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
     for i in range(10):
-        log_once('xxx')
+        log_once("xxx")

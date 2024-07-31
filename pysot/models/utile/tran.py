@@ -9,7 +9,6 @@ from pysot.models.utile.pos_utils import get_2d_sincos_pos_embed
 
 
 class PatchEmbed(nn.Module):
-    """2D Image to Patch Embedding"""
 
     def __init__(
         self, patch_size=16, in_chans=3, embed_dim=768, norm_layer=None, flatten=True
@@ -141,12 +140,9 @@ class Block(nn.Module):
 
 
 class VisionTransformer(timm.models.vision_transformer.VisionTransformer):
-    """Vision Transformer with support for global average pooling"""
-
     def __init__(
         self,
-        img_size_s=256,
-        img_size_t=128,
+        img_size=256,
         patch_size=16,
         in_chans=3,
         num_classes=1000,
@@ -164,7 +160,7 @@ class VisionTransformer(timm.models.vision_transformer.VisionTransformer):
         act_layer=None,
     ):
         super(VisionTransformer, self).__init__(
-            img_size=224,
+            img_size=256,
             patch_size=patch_size,
             in_chans=in_chans,
             num_classes=num_classes,
@@ -203,15 +199,18 @@ class VisionTransformer(timm.models.vision_transformer.VisionTransformer):
             ]
         )
 
-        self.grid_size_s = img_size_s // patch_size
-        self.grid_size_t = img_size_t // patch_size
-        self.num_patches_s = self.grid_size_s**2
-        self.num_patches_t = self.grid_size_t**2
-        self.pos_embed_s = nn.Parameter(
-            torch.zeros(1, self.num_patches_s, embed_dim), requires_grad=False
+        self.grid_size = img_size // patch_size
+        self.num_patches = self.grid_size**2
+        self.pos_embed1 = nn.Parameter(
+            torch.zeros(1, self.num_patches, embed_dim), requires_grad=False
         )
-        self.pos_embed_t = nn.Parameter(
-            torch.zeros(1, self.num_patches_t, embed_dim), requires_grad=False
+
+        self.pos_embed2 = nn.Parameter(
+            torch.zeros(1, self.num_patches, embed_dim), requires_grad=False
+        )
+
+        self.pos_embed3 = nn.Parameter(
+            torch.zeros(1, self.num_patches, embed_dim), requires_grad=False
         )
 
         self.init_pos_embed()
@@ -221,33 +220,31 @@ class VisionTransformer(timm.models.vision_transformer.VisionTransformer):
 
     def init_pos_embed(self):
         # initialize (and freeze) pos_embed by sin-cos embedding
-        pos_embed_t = get_2d_sincos_pos_embed(
-            self.pos_embed_t.shape[-1], int(self.num_patches_t**0.5), cls_token=False
+        pos_embed1 = get_2d_sincos_pos_embed(
+            self.pos_embed1.shape[-1], int(self.num_patches**0.5), cls_token=False
         )
-        self.pos_embed_t.data.copy_(torch.from_numpy(pos_embed_t).float().unsqueeze(0))
+        self.pos_embed1.data.copy_(torch.from_numpy(pos_embed1).float().unsqueeze(0))
 
-        pos_embed_s = get_2d_sincos_pos_embed(
-            self.pos_embed_s.shape[-1], int(self.num_patches_s**0.5), cls_token=False
+        pos_embed2 = get_2d_sincos_pos_embed(
+            self.pos_embed2.shape[-1], int(self.num_patches**0.5), cls_token=False
         )
-        self.pos_embed_s.data.copy_(torch.from_numpy(pos_embed_s).float().unsqueeze(0))
+        self.pos_embed2.data.copy_(torch.from_numpy(pos_embed2).float().unsqueeze(0))
+
+        pos_embed3 = get_2d_sincos_pos_embed(
+            self.pos_embed3.shape[-1], int(self.num_patches**0.5), cls_token=False
+        )
+        self.pos_embed3.data.copy_(torch.from_numpy(pos_embed3).float().unsqueeze(0))
 
     def forward(self, x3, x4, x5):
-        """
-        :param x3: (batch, 3, 128, 128)
-        :param x5: (batch, 3, 288, 288)
-        b c h w: batch 192 11 11
-        :return:
-        """
         x3 = self.patch_embed(x3)  # BCHW-->BNC
         x4 = self.patch_embed(x4)
         x5 = self.patch_embed(x5)
         B, C = x3.size(0), x3.size(-1)
-        H_s = W_s = self.grid_size_s
-        H_t = W_t = self.grid_size_t
+        H = W = self.grid_size
 
-        x5 = x5 + self.pos_embed_s
-        x3 = x3 + self.pos_embed_t
-        x4 = x4 + self.pos_embed_t
+        x3 = x3 + self.pos_embed1
+        x4 = x4 + self.pos_embed2
+        x5 = x5 + self.pos_embed3
         x = torch.cat([x3, x4, x5], dim=2)
         x = self.pos_drop(x)
 
@@ -256,8 +253,6 @@ class VisionTransformer(timm.models.vision_transformer.VisionTransformer):
 
         x3, x4, x5 = torch.split(x, x.shape[2] // 3, dim=2)
 
-        x3_2d = x3.transpose(1, 2).reshape(B, C, H_t, W_t)
-        x4_2d = x4.transpose(1, 2).reshape(B, C, H_t, W_t)
-        x5_2d = x5.transpose(1, 2).reshape(B, C, H_s, W_s)
+        x5_2d = x5.transpose(1, 2).reshape(B, C, H, W)
 
         return x5_2d

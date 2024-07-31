@@ -11,7 +11,7 @@ __C = CN()
 
 cfg = __C
 
-__C.META_ARC = "HiFT_alexnet"
+__C.META_ARC = "PRL_alexnet"
 
 __C.CUDA = True
 
@@ -41,11 +41,11 @@ __C.TRAIN.CLS_WEIGHT = 1.0
 
 __C.TRAIN.LOC_WEIGHT = 3.0
 
-__C.TRAIN.SHAPE_WEIGHT =2.0
+__C.TRAIN.SHAPE_WEIGHT = 2.0
 
 __C.TRAIN.EXEMPLAR_SIZE = 127
 
-__C.TRAIN.SEARCH_SIZE = 287 #255
+__C.TRAIN.SEARCH_SIZE = 287  # 255
 
 __C.TRAIN.OUTPUTFEATURE_SIZE = 11
 
@@ -53,17 +53,17 @@ __C.TRAIN.LABEL_RANGE = 4
 
 __C.TRAIN.BASE_SIZE = 8
 
-__C.TRAIN.OUTPUT_SIZE = 21 #25
+__C.TRAIN.OUTPUT_SIZE = 21  # 25
 
-__C.TRAIN.RESUME = ''
+__C.TRAIN.RESUME = ""
 
 __C.TRAIN.PRETRAINED = 1
 
-__C.TRAIN.LARGER=2.0
+__C.TRAIN.LARGER = 2.0
 
-__C.TRAIN.LOG_DIR = './logs'
+__C.TRAIN.LOG_DIR = "./logs"
 
-__C.TRAIN.SNAPSHOT_DIR = './snapshot'
+__C.TRAIN.SNAPSHOT_DIR = "./snapshot"
 
 __C.TRAIN.EPOCH = 30
 
@@ -79,17 +79,17 @@ __C.TRAIN.MOMENTUM = 0.9
 
 __C.TRAIN.WEIGHT_DECAY = 0.0001
 
-__C.TRAIN.w1=1.0
+__C.TRAIN.w1 = 1.0
 
-__C.TRAIN.w2=1.0
+__C.TRAIN.w2 = 1.0
 
-__C.TRAIN.w3=1.0
+__C.TRAIN.w3 = 1.0
 
-__C.TRAIN.w4=1.0
+__C.TRAIN.w4 = 1.0
 
-__C.TRAIN.w5=1.0
+__C.TRAIN.w5 = 1.0
 
-__C.TRAIN.range=2.0
+__C.TRAIN.range = 2.0
 
 
 __C.TRAIN.MASK_WEIGHT = 1
@@ -104,7 +104,7 @@ __C.TRAIN.BASE_LR = 0.005
 
 __C.TRAIN.LR = CN()
 
-__C.TRAIN.LR.TYPE = 'log'
+__C.TRAIN.LR.TYPE = "log"
 
 __C.TRAIN.LR.KWARGS = CN(new_allowed=True)
 
@@ -112,7 +112,7 @@ __C.TRAIN.LR_WARMUP = CN()
 
 __C.TRAIN.LR_WARMUP.WARMUP = True
 
-__C.TRAIN.LR_WARMUP.TYPE = 'step'
+__C.TRAIN.LR_WARMUP.TYPE = "step"
 
 __C.TRAIN.LR_WARMUP.EPOCH = 5
 
@@ -151,42 +151,44 @@ __C.DATASET.SEARCH.FLIP = 0.0
 __C.DATASET.SEARCH.COLOR = 1.0
 
 # for detail discussion
-__C.DATASET.NEG = 0.2  
+__C.DATASET.NEG = 0.2
 
 __C.DATASET.GRAY = 0.0
 
-__C.DATASET.NAMES = ('VID', 'COCO', 'GOT', 'YOUTUBEBB', 'LaSOT')
+__C.DATASET.NAMES = ("VID", "COCO", "GOT", "YOUTUBEBB", "LaSOT")
 
 __C.DATASET.VID = CN()
-__C.DATASET.VID.ROOT = '/mnt/new_sdd/OriginDataset/vid/crop511'
-__C.DATASET.VID.ANNO = '/mnt/new_sdd/OriginDataset/vid/train.json'
+__C.DATASET.VID.ROOT = "/mnt/new_sdd/OriginDataset/vid/crop511"
+__C.DATASET.VID.ANNO = "/mnt/new_sdd/OriginDataset/vid/train.json"
 __C.DATASET.VID.FRAME_RANGE = 100
 __C.DATASET.VID.NUM_USE = 100000  # repeat until reach NUM_USE
 
 __C.DATASET.YOUTUBEBB = CN()
-__C.DATASET.YOUTUBEBB.ROOT = ''
-__C.DATASET.YOUTUBEBB.ANNO = ''
+__C.DATASET.YOUTUBEBB.ROOT = "/mnt/sdg/Train_dataset/yt_bb/crop511"
+__C.DATASET.YOUTUBEBB.ANNO = "/mnt/sdg/Train_dataset/yt_bb/train.json"
 __C.DATASET.YOUTUBEBB.FRAME_RANGE = 3
 __C.DATASET.YOUTUBEBB.NUM_USE = -1  # use all not repeat
 
 __C.DATASET.COCO = CN()
-__C.DATASET.COCO.ROOT = '/mnt/new_sdd/OriginDataset/coco2017/crop511'
-__C.DATASET.COCO.ANNO = '/mnt/new_sdd/OriginDataset/coco2017/train2017.json'
+__C.DATASET.COCO.ROOT = "/mnt/new_sdd/OriginDataset/coco2017/crop511"
+__C.DATASET.COCO.ANNO = "/mnt/new_sdd/OriginDataset/coco2017/train2017.json"
 __C.DATASET.COCO.FRAME_RANGE = 1
 __C.DATASET.COCO.NUM_USE = -1
 
 
 __C.DATASET.GOT = CN()
-__C.DATASET.GOT.ROOT = '/mnt/new_sdd/OriginDataset/GOT10K/crop511'         # GOT dataset path
-__C.DATASET.GOT.ANNO = '/mnt/new_sdd/OriginDataset/GOT10K/train.json'
+__C.DATASET.GOT.ROOT = "/mnt/new_sdd/OriginDataset/GOT10K/crop511"  # GOT dataset path
+__C.DATASET.GOT.ANNO = "/mnt/new_sdd/OriginDataset/GOT10K/train.json"
 __C.DATASET.GOT.FRAME_RANGE = 50
 __C.DATASET.GOT.NUM_USE = 100000
 
 
 __C.DATASET.LaSOT = CN()
-__C.DATASET.LaSOT.ROOT = '/mnt/new_sdd/OriginDataset/LaSOT/crop511'         # LaSOT dataset path
-__C.DATASET.LaSOT.ANNO = '/mnt/new_sdd/OriginDataset/LaSOT/train.json'
-__C.DATASET.LaSOT.FRAME_RANGE = 50 #100
+__C.DATASET.LaSOT.ROOT = (
+    "/mnt/new_sdd/OriginDataset/LaSOT/crop511"  # LaSOT dataset path
+)
+__C.DATASET.LaSOT.ANNO = "/mnt/new_sdd/OriginDataset/LaSOT/train.json"
+__C.DATASET.LaSOT.FRAME_RANGE = 50  # 100
 __C.DATASET.LaSOT.NUM_USE = 100000
 
 __C.DATASET.VIDEOS_PER_EPOCH = 600000
@@ -198,25 +200,21 @@ __C.DATASET.VIDEOS_PER_EPOCH = 600000
 __C.BACKBONE = CN()
 
 # Backbone type, current only support resnet18,34,50;alexnet;mobilenet
-__C.BACKBONE.TYPE = 'alexnet'
+__C.BACKBONE.TYPE = "alexnet"
 
 __C.BACKBONE.KWARGS = CN(new_allowed=True)
 
 # Pretrained backbone weights
-__C.BACKBONE.PRETRAINED = 'alexnet-bn.pth'
+__C.BACKBONE.PRETRAINED = "alexnet-bn.pth"
 
 # Train layers
-__C.BACKBONE.TRAIN_LAYERS = ['layer3', 'layer4', 'layer5']
+__C.BACKBONE.TRAIN_LAYERS = ["layer3", "layer4", "layer5"]
 
 # Layer LR
 __C.BACKBONE.LAYERS_LR = 0.1
 
 # Switch to train layer
 __C.BACKBONE.TRAIN_EPOCH = 10
-
-
-__C.VIT = CN()
-__C.VIT.PRETRAINED = 'mae_pretrain_vit_base.pth'  # MixViT 部分预
 
 
 # # ------------------------------------------------------------------------ #
@@ -233,7 +231,7 @@ __C.ANCHOR.STRIDE = 16
 # ------------------------------------------------------------------------ #
 __C.TRACK = CN()
 
-__C.TRACK.TYPE = 'PRLTracker'
+__C.TRACK.TYPE = "PRLTracker"
 
 # Scale penalty
 __C.TRACK.PENALTY_K = 0.04
@@ -244,13 +242,13 @@ __C.TRACK.WINDOW_INFLUENCE = 0.44
 # Interpolation learning rate
 __C.TRACK.LR = 0.4
 
-__C.TRACK.w1=1.2 
+__C.TRACK.w1 = 1.2
 
-__C.TRACK.w2=1.0
+__C.TRACK.w2 = 1.0
 
-__C.TRACK.w3=1.6 
+__C.TRACK.w3 = 1.6
 
-__C.TRACK.LARGER=1.4
+__C.TRACK.LARGER = 1.4
 # Exemplar size
 __C.TRACK.EXEMPLAR_SIZE = 127
 
@@ -260,7 +258,7 @@ __C.TRACK.INSTANCE_SIZE = 255
 # Base size
 __C.TRACK.BASE_SIZE = 8
 
-__C.TRACK.STRIDE = 8 
+__C.TRACK.STRIDE = 8
 
 # Context amount
 __C.TRACK.CONTEXT_AMOUNT = 0.5

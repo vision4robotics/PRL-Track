@@ -22,7 +22,7 @@ TRACK:
 TRAIN:
     EPOCH: 100  
     START_EPOCH: 0  
-    BATCH_SIZE: 256 
+    BATCH_SIZE: 128
     NUM_GPU: 2
     BASE_LR: 0.005
     RESUME: ""

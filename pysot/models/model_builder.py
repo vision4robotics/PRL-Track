@@ -17,7 +17,6 @@ from pysot.models.loss import select_cross_entropy_loss, IOULoss
 class ModelBuilder(nn.Module):
     def __init__(self):
         super(ModelBuilder, self).__init__()
-
         self.backbone = AlexNet().cuda()
         self.grader = PRL(cfg).cuda()
         self.cls2loss = nn.BCEWithLogitsLoss()
@@ -97,7 +96,7 @@ class ModelBuilder(nn.Module):
         template = data["template"].cuda()
         search = data["search"].cuda()
         bbox = data["bbox"].cuda()
-        labelcls1 = data["label_cls1"].cuda()
+        labelcls1 = data["labelcls1"].cuda()
         labelxff = data["labelxff"].cuda()
         labelcls2 = data["labelcls2"].cuda()
         weightxff = data["weightxff"].cuda()

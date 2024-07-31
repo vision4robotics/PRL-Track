@@ -9,12 +9,12 @@ import argparse
 
 sys.path.append("./")
 
+import numpy as np
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
 from torch.nn.utils import clip_grad_norm_
 from torch.utils.data.distributed import DistributedSampler
-import numpy as np
 
 from tensorboardX import SummaryWriter
 
@@ -36,7 +36,7 @@ from pysot.core.config import cfg
 
 torch.autograd.set_detect_anomaly(True)
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "0, 1"
+os.environ["CUDA_VISIBLE_DEVICES"] = "2, 3"
 
 logger = logging.getLogger("global")
 parser = argparse.ArgumentParser(description="PRL-Track tracking")
@@ -112,6 +112,10 @@ def build_opt_lr(model, current_epoch=0):
         momentum=cfg.TRAIN.MOMENTUM,
         weight_decay=cfg.TRAIN.WEIGHT_DECAY,
     )
+    # optimizer = torch.optim.AdamW(
+    #     trainable_params,
+    #     weight_decay=cfg.TRAIN.WEIGHT_DECAY,
+    # )
 
     lr_scheduler = build_lr_scheduler(optimizer, epochs=cfg.TRAIN.EPOCH)
     lr_scheduler.step(cfg.TRAIN.START_EPOCH)

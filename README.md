@@ -1,5 +1,6 @@
-# 🏃‍♀️ PRL-Track: Progressive Representation Learning for Real-Time UAV Tracking
+# 🏃‍♀️ PRL-Track: Progressive Representation Learning for Real-Time UAV Tracking (IROS 2024)
 Changhong Fu∗, Xiang Lei, Haobo Zuo, Liangliang Yao, Guangze Zheng, and Jia Pan
+
 \* Corresponding author.
 
 This is the official code for the paper "Progressive Representation Learning for Real-Time UAV Tracking".
@@ -42,7 +43,7 @@ python tools/train.py
 ```
 
 ### Testing
-Download pretrained model: [PRL-Track](https://drive.google.com/file/d/1v0oHyv6XTyOfnq09_HpBN3W_qEnLD32d/view?usp=sharing) and put it into `tools/snapshot` directory.
+Download pretrained model: [PRL-Track](https://drive.google.com/drive/folders/1WYQf_zAMy9Xf1tLH1MRmQELe5ywwsB5d?usp=drive_link) and put it into `tools/snapshot` directory.
 
 Download testing datasets and put them into `test_dataset` directory. If you want to test the tracker on a new dataset, please refer to [pysot-toolkit](https://github.com/StrangerZhang/pysot-toolkit) to set test_dataset.
 
@@ -50,7 +51,7 @@ Download testing datasets and put them into `test_dataset` directory. If you wan
 python tools/test.py 
 ```
    
-The testing result will be saved in the `results/dataset_name/tracker_name` directory.
+The testing result will be saved in the `results/dataset_name/tracker_name` directory, and the experimental results in our paper can be downloaded from [Google Drive](https://drive.google.com/drive/folders/1WYQf_zAMy9Xf1tLH1MRmQELe5ywwsB5d?usp=drive_link).
 
 ### Evaluation
 We provide the tracking results of UAVTrack112, UAVTrack112_L, and UAV123. 

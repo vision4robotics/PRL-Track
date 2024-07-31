@@ -272,11 +272,10 @@ class TrkDataset(Dataset):
         return {
                 'template': template,
                 'search': search,
-                'bbox': np.array([bbox.x1,bbox.y1,bbox.x2,bbox.y2]),  
-                'label_cls1':labelcls1,
+                'bbox': np.array([bbox.x1, bbox.y1, bbox.x2, bbox.y2]),  
+                'labelcls1':labelcls1,
                 'labelxff':labelxff,
                 'labelcls2':labelcls2,
                 'weightxff':weightxff,
-
                 }
 
